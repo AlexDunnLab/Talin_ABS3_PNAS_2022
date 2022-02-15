@@ -18,7 +18,7 @@ cd(output_dir)
 output_dir = pwd;
 time_res = 10; %in kHz
 thresh = 0.64;
-smooth_window = 100; %20 ms
+smooth_window = 200; %20 ms
 maybe_thresh = 0.8; %flood fill threshold
 std_window = 15;
 
@@ -37,10 +37,7 @@ for f=1:numel(fnames)
        freq_trace(t,:) = freq_trace(t,:)/nanmean(freq_trace(t,:)); 
     end
     
-    freq_trace = [freq_trace; mean(freq_trace,1)]; %third column is sum
-    
     %isbound initially for each trap if below "thresh" for the single-trap
-    %signals or below "thresh_both" for the mean trap signal. 
     isbound = zeros(size(freq_trace));
     isbound(freq_trace < thresh) = 1;
     
@@ -148,8 +145,3 @@ final_results.results.all.NLB_BE = NLB_BE;
 final_results.results.all.NLB_ids = NLB_ids;
 final_results.results.all.fname_ids = fnames_ids;
 final_results.results.all.fname = fnames;
-
-final_results.results.R13DD = NLB_BE(NLB_ids==3);
-final_results.results.GHR13DD = NLB_BE(NLB_ids==2);
-final_results.results.R13andGHR13 = NLB_BE(NLB_ids==1);
-final_results.results.neg = NLB_BE(NLB_ids==0);
